@@ -1,0 +1,22 @@
+class Solution {
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        int size = sizeOfList(head);
+        ListNode pointer = head;
+        int common = size-n;
+        if(common==0) return head.next;
+        for(int i=0; i<common-1; i++){
+            pointer = pointer.next;
+        }
+        pointer.next = pointer.next.next;
+        return head;
+    }
+    static int sizeOfList(ListNode head){
+        int size = 0;
+        ListNode temp = head;
+        while(temp != null){
+            size++;
+            temp = temp.next;
+        }
+        return size;
+    }
+}
