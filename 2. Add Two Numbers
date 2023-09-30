@@ -1,0 +1,79 @@
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode head1,ListNode head2) {
+        ListNode l1 = head1;
+        ListNode l2 = head2;
+        int carry = 0;
+        ListNode pointer = new ListNode(-70);
+        ListNode ptr = pointer;
+        while(l1 != null && l2 != null){
+            int total = l1.val + l2.val + carry;
+            if(total > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(total);
+                int value = sb.charAt(1)-48;
+                ListNode curr = new ListNode(value);
+                carry = (int) sb.charAt(0)-48;
+                ptr.next = curr;
+                ptr = curr;
+                sb = new StringBuilder();
+                l1 = l1.next; l2 = l2.next;
+            }
+            else {
+                ListNode curr = new ListNode(total);
+                ptr.next = curr;
+                ptr = curr;
+                l1 = l1.next; l2 = l2.next;
+                carry = 0;
+            }
+        }
+        while(l1 != null){
+            int total = carry + l1.val;
+            if(total > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(total);
+                int value = sb.charAt(1)-48;
+                ListNode curr = new ListNode(value);
+                carry = (int) sb.charAt(0)-48;
+                ptr.next = curr;
+                ptr = curr;
+                sb = new StringBuilder();
+                l1 = l1.next;
+            }
+            else{
+                ListNode curr = new ListNode(total);
+                ptr.next = curr;
+                ptr = curr;
+                l1 = l1.next;
+                carry = 0;
+            }
+        }
+        while(l2 != null){
+            int total = carry + l2.val;
+            if(total > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(total);
+                int value = sb.charAt(1)-48;
+                ListNode curr = new ListNode(value);
+                carry = (int) sb.charAt(0)-48;
+                ptr.next = curr;
+                ptr = curr;
+                sb = new StringBuilder();
+                l2 = l2.next;
+            }
+            else{
+                ListNode curr = new ListNode(total);
+                ptr.next = curr;
+                ptr = curr;
+                l2 = l2.next;
+                carry = 0;
+            }
+        }
+        if(carry > 0){
+            ListNode curr = new ListNode(carry);
+            ptr.next = curr;
+            ptr = curr;
+        }
+        return pointer.next; 
+    }
+}
