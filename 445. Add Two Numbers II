@@ -1,0 +1,98 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode c = reverseList(l1);
+        ListNode d = reverseList(l2);
+        ListNode li = new ListNode(-70);
+        ListNode l = li;
+        int carry = 0 ;
+        while(c != null && d != null){
+            int sum = c.val + d.val + carry;
+            if(sum > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(sum);
+                int data  = sb.charAt(1)-48;
+                ListNode curr = new ListNode(data);
+                carry = sb.charAt(0)-48;
+                li.next = curr;
+                li = curr;
+                sb = new StringBuilder();
+            } else {
+                ListNode curr = new ListNode(sum);
+                carry = 0;
+                li.next = curr;
+                li = curr;
+            }
+            c = c.next; d = d.next;
+        }
+        while(c != null){
+            int sum = c.val + carry;
+            if(sum > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(sum);
+                int data  = sb.charAt(1)-48;
+                ListNode curr = new ListNode(data);
+                carry = sb.charAt(0)-48;
+                li.next = curr;
+                li = curr;
+                sb = new StringBuilder();
+            } else {
+                ListNode curr = new ListNode(sum);
+                carry = 0;
+                li.next = curr;
+                li = curr;
+            }
+            c = c.next;
+        }
+
+        while(d != null){
+            int sum = d.val + carry;
+            if(sum > 9){
+                StringBuilder sb = new StringBuilder();
+                sb.append(sum);
+                int data  = sb.charAt(1)-48;
+                ListNode curr = new ListNode(data);
+                carry = sb.charAt(0)-48;
+                li.next = curr;
+                li = curr;
+                sb = new StringBuilder();
+            } else {
+                ListNode curr = new ListNode(sum);
+                carry = 0;
+                li.next = curr;
+                li = curr;
+            }
+            d = d.next;
+        }
+          if(carry > 0){
+            ListNode curr = new ListNode(carry);
+            carry = 0;
+            li.next = curr;
+            li = curr;
+        }
+            ListNode ans = reverseList(l.next);
+        return ans;
+    }
+    static ListNode reverseList(ListNode head){
+        ListNode curr = head;
+        ListNode after = null;
+        ListNode previous = null;
+
+        while(curr != null){
+            after = curr.next;
+            curr.next = previous;
+            previous = curr;
+            curr = after;
+        }
+        return previous;
+    }
+}
